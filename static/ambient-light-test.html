@@ -1,0 +1,27 @@
+<html>
+<head>
+	<title>Ambient Light Test</title>
+	<script type="text/javascript" src='js/jquery-1.8.2.min.js'></script>
+	<script type="text/javascript">
+		$(function() {
+			var supported = $('.supported');
+			var value = $('.value');
+			var last = 0;
+			var cnt = 0;
+
+			supported.text((window.ondevicelight)? 'Yes' : 'No');
+			window.addEventListener('devicelight', function(e) {
+				var now = +new Date();
+				supported.text(e.value + ' (' + (now - last) + 'ms|' + ++cnt + ')');
+				last = now;
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class='content'>
+		<div class='supported'></div>
+		<div class='value'></div>
+	</div>
+</body>
+</html>
