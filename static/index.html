@@ -82,11 +82,37 @@ h.onsuccess = function() {
 			<div class="step" data-x="100" data-y="1392" data-z="-800" data-scale=".8" data-focus='file'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="1350" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+var lockedFile = myFile.open();
+var request = lockedFile.readAsText(3);
+request.onsuccess = function(event) {
+  var text = event.target.result;
+  // 3 characters have been read.
+}
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="1465" data-z="-800" data-scale=".8" data-focus='idle'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="1423" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+navigator.addIdelObserver({
+  time: 10, // seconds
+  onidle: idleHandler, // fn
+  onactive: activeHandler // fn
+});
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="1538" data-z="-800" data-scale=".8" data-focus='indexed'>
 				
+			</div>
+			<div class="step" data-x="426.5" data-y="1496" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -240px'>
+var request = indexedDB.open('AddressBook', 15);
+request.onsuccess = function(evt) {...};
+request.onerror = function(evt) {...};
+</pre>
 			</div>
 			<div class="step" data-x="100" data-y="1611" data-z="-800" data-scale=".8" data-focus='media'>
 				
@@ -94,14 +120,41 @@ h.onsuccess = function() {
 			<div class="step" data-x="100" data-y="1684" data-z="-800" data-scale=".8" data-focus='mouse'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="1642" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+elem.requestPointerLock = 
+  elem.requestPointerLock ||
+  elem.mozRequestPointerLock ||
+  elem.webkitRequestPointerLock;
+elem.requestPointerLock();
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="1757" data-z="-800" data-scale=".8" data-focus='network'>
 				
 			</div>
 			<div class="step" data-x="100" data-y="1830" data-z="-800" data-scale=".8" data-focus='open'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="1788" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+navigator.mozApps.install();
+navigator.mozApps.getSelf();
+navigator.mozApps.getInstalled();
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="1903" data-z="-800" data-scale=".8" data-focus='proximity'>
 				
+			</div>
+			<div class="step" data-x="426.5" data-y="1861" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -240px'>
+window.addEventListener("userproximity", fn, true);
+function fn(event) {
+  if (event.near) 
+    console.log("Near");
+  else
+    console.log("Far");
+}
+</pre>
 			</div>
 			<div class="step" data-x="100" data-y="1976" data-z="-800" data-scale=".8" data-focus='screen'>
 				
@@ -109,14 +162,44 @@ h.onsuccess = function() {
 			<div class="step" data-x="100" data-y="2049" data-z="-800" data-scale=".8" data-focus='sms'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="2007" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+// Done but not shipped :(
+window.addEventListener(
+  'smsevent', 
+  function(event) {
+    switch(event.type) {
+      case 'smssent': ...
+      case 'smsdelivered': ...
+      case 'smsreceived': ...
+    }
+  }
+);
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="2122" data-z="-800" data-scale=".8" data-focus='time'>
 				
+			</div>
+			<div class="step" data-x="426.5" data-y="2080" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+// Based on the proposal
+var clock = navigator.timeManager;
+clock.set(date); // Date Object
+clock.set(ticks); // POSIX time
+</pre>
 			</div>
 			<div class="step" data-x="100" data-y="2195" data-z="-800" data-scale=".8" data-focus='telephony'>
 				
 			</div>
 			<div class="step" data-x="100" data-y="2268" data-z="-800" data-scale=".8" data-focus='vibration'>
 				
+			</div>
+			<div class="step" data-x="426.5" data-y="2226" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+navigator.mozVibrate(600);
+navigator.mozVibrate([200, 100, 200, 100]);
+navigator.mozVibrate(0);
+</pre>
 			</div>
 			<div class="step clarify" data-x="0" data-y="1600" data-z="-800">
 		    	<table cellspacing="4">
@@ -159,7 +242,7 @@ h.onsuccess = function() {
 			    		</tr>
 			    		<tr class='focus' data-focus-id='idle'>
 			    			<td class='title'>Idle</td>
-			    			<td></td>
+			    			<td>√</td>
 			    			<td>√</td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='indexed'>
