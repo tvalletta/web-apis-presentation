@@ -6,9 +6,17 @@
         <meta name="author" content="Thomas A. Valletta" />
         <meta name="author" content="Gabriel Dayley" />
         <link href="css/impress.css" rel="stylesheet" />
+        <link href="css/prettify.css" rel="stylesheet" />
         <script type="text/javascript" src='js/jquery-1.8.2.min.js'></script>
+        <script type="text/javascript" src='js/prettify.js'></script>
+        <style type="text/css">
+        	pre.prettyprint {
+				font-family: "Courier New", Monaco, "Lucida Console", monospace;
+				font-weight: bold;
+        	}
+        </style>
     </head>
-    <body>
+    <body onload='prettyPrint()'>
 		<p class="fallback-message">
 		    Your browser doesn't support impress.js.  Try Chrome or Safari.
 		</p>
@@ -35,11 +43,32 @@
 			<div class="step" data-x="100" data-y="1100" data-z="-800" data-scale=".8" data-focus='ambient'>
 				
 			</div>
-			<div class="step" data-x="426.5" data-y="1058" data-z="-800" data-scale=".08" data-focus='ambient'>
-				
+			<div class="step" data-x="426.5" data-y="1058" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js'>
+window.addEventListener(
+  'devicelight', 
+  function(event) {
+    console.log(event.value);
+  }
+);
+</pre>
 			</div>
 			<div class="step" data-x="100" data-y="1173" data-z="-800" data-scale=".8" data-focus='archive'>
-				
+			
+			</div>
+			<div class="step" data-x="426.5" data-y="1131" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -240px'>
+var blob = ...;
+var reader = ArchiveReader(blob);
+ 
+var h = reader.getFilenames();
+h.onerror = function() { ... }
+h.onsuccess = function() {
+  for (var i = 0; i < this.result.length; ++i) {
+    something(this.result[i]);
+  }
+}
+</pre>	
 			</div>
 			<div class="step" data-x="100" data-y="1246" data-z="-800" data-scale=".8" data-focus='battery'>
 				
