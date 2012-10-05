@@ -146,7 +146,7 @@ navigator.mozApps.getInstalled();
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="1861" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js' style='position: relative; left: -240px'>
+<pre class='prettyprint lang-js' style='position: relative; left: -250px'>
 window.addEventListener("userproximity", fn, true);
 function fn(event) {
   if (event.near) 
@@ -191,16 +191,32 @@ clock.set(ticks); // POSIX time
 			<div class="step" data-x="100" data-y="2195" data-z="-800" data-scale=".8" data-focus='telephony'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="2153" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -240px; font-size: 36px'>
+var call = navigator.mozTelephony.dial("8012401000");
+call.addEventListener('readystatechange', function() {
+	console.log('readyState');
+})
+
+navigator.mozTelephony.addEventListener('incoming', 
+  function(event)) {
+    call = navigator.mozTelephony.liveCalls[0];
+    console.log('Call from: ' + call.number);
+  }
+);
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="2268" data-z="-800" data-scale=".8" data-focus='vibration'>
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="2226" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js'>
+<pre class='prettyprint lang-js' style='position: relative; left: -100px'>
 navigator.mozVibrate(600);
 navigator.mozVibrate([200, 100, 200, 100]);
 navigator.mozVibrate(0);
 </pre>
 			</div>
+			<div class="step" data-x="0" data-y="1600" data-z=""></div>
 			<div class="step clarify" data-x="0" data-y="1600" data-z="-800">
 		    	<table cellspacing="4">
 		    		<tbody>
@@ -303,10 +319,8 @@ navigator.mozVibrate(0);
 			    	</tbody>
 		    	</table>
 			</div>
-			<div class="step" data-x="" data-y="3400" data-z="0">
-				
-			</div>
-			<div class="step" data-x="-800" data-y="3400" data-z="0">
+			<div class="step" data-x="0" data-y="3400" data-z=""></div>
+			<div class="step clarify" data-x="0" data-y="3400" data-z="-800">
 		    	<table>
 		    		<tbody>
 			    		<tr class='header'>
@@ -315,45 +329,93 @@ navigator.mozVibrate(0);
 			    			<td>Mobile</td>
 			    			<td>Detail</td>
 			    		</tr>
-			    		<tr class='focus' data-focus-id='battery'>
-			    			<td class='title'>Battery</td>
-			    			<td>√</td>
-			    			<td>√</td>
-			    			<td></td>
-			    		</tr>
-			    		<tr class='focus' data-focus-id='a'>
-			    			<td class='title'>Idle</td>
-			    			<td></td>
-			    			<td>√</td>
-			    			<td></td>
-			    		</tr>
-			    		<tr class='focus' data-focus-id='b'>
-			    			<td class='title'>Media Capture</td>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Alarm</td>
 			    			<td>√</td>
 			    			<td>√</td>
 			    			<td></td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='c'>
-			    			<td class='title'>Screen Orientation</td>
+			    			<td class='title'>Bluetooth</td>
 			    			<td></td>
+			    			<td></td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Browser</td>
+			    			<td>√</td>
+			    			<td>√</td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Contacts</td>
+			    			<td></td>
+			    			<td>√</td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Device Storage</td>
+			    			<td>√</td>
+			    			<td>√</td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Mobile Connection</td>
+			    			<td></td>
+			    			<td></td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Permissions</td>
+			    			<td></td>
+			    			<td></td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Power Management</td>
+			    			<td></td>
+			    			<td></td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='c'>
+			    			<td class='title'>Push Notifications</td>
+			    			<td>√</td>
 			    			<td>√</td>
 			    			<td></td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='d'>
-			    			<td class='title'>SMS</td>
+			    			<td class='title'>Settings</td>
 			    			<td></td>
+			    			<td></td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='d'>
+			    			<td class='title'>TCP Socket</td>
+			    			<td>√</td>
 			    			<td>√</td>
 			    			<td></td>
 			    		</tr>
-			    		<tr class='focus' data-focus-id='e'>
-			    			<td class='title'>Telephony</td>
-			    			<td></td>
+			    		<tr class='focus' data-focus-id='d'>
+			    			<td class='title'>Web Activities</td>
+			    			<td>√</td>
 			    			<td>√</td>
 			    			<td></td>
 			    		</tr>
-			    		<tr class='focus' data-focus-id='f'>
-			    			<td class='title'>Vibration</td>
+			    		<tr class='focus' data-focus-id='d'>
+			    			<td class='title'>Web FM</td>
+			    			<td>√</td>
+			    			<td>√</td>
 			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='d'>
+			    			<td class='title'>Web Payments</td>
+			    			<td></td>
+			    			<td></td>
+			    			<td></td>
+			    		</tr>
+			    		<tr class='focus' data-focus-id='d'>
+			    			<td class='title'>WiFi Information</td>
+			    			<td>√</td>
 			    			<td>√</td>
 			    			<td></td>
 			    		</tr>
