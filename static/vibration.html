@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<script>
+    function buzz(){
+        alert('buzz');
+    }
+
+    setTimeout(function(){
+
+        var vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || buzz;
+//        alert(vibrate);
+        vibrate([50,100,150]);
+    },1000);
+</script>
+
+</body>
+</html>
