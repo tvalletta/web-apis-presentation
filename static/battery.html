@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        #battery {
+            -webkit-transition: all .3s ease-in-out;
+            -moz-transition: all .3s ease-in-out;
+
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 500px;
+            height: 120px;
+            margin-left: -250px;
+            margin-top: -60px;
+
+            padding: 4px;
+            /*border-radius: 3px;*/
+            background: #dedede;
+            text-align: center;
+            border: 4px solid #666;
+
+            /*-webkit-box-reflect: below 2px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(50%, transparent), to(rgba(255, 255, 255, 0.15)));*/
+        }
+
+        #battery > div.status {
+            /*background: rgba(83,134,162,.8);
+          background: -webkit-repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(83,134,162,.8) 5px, rgba(83,134,162,.8) 10px);*/
+
+            /*background: -webkit-repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(102, 102, 102, 1.0) 3px, rgba(102, 102, 102, 1.0) 12px);*/
+            /*background: -moz-repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(102, 102, 102, 1.0) 5px, rgba(102, 102, 102, 1.0) 10px);*/
+
+            background: #545454;
+            height: 100%;
+        }
+
+        #battery > div.contact {
+
+            position: absolute;
+            right: -14px;
+            top: 43px;
+            border-top: 4px solid #666;
+            border-bottom: 4px solid #666;
+            border-right: 4px solid #666;
+            background: #dedede;
+            width: 6px;
+            height: 32px;
+
+            /*border-top-right-radius: 3px;*/
+            /*border-bottom-right-radius: 3px;*/
+            z-index: 5;
+        }
+
+        .charging {
+            /*box-shadow: 0px 0px 25px 15px green;*/
+            /*box-shadow: 0px 0px -7px 20px #bada55;*/
+            box-shadow: 0px 0px 0px 20px #bada55;
+        }
+    </style>
+
+
+</head>
+<body>
+
+<div id="battery" class="charging">
+    <div class="status"></div>
+    <div class="contact"></div>
+</div>
+
+<div id="dischargingTime"></div>
+
+<!--<a href="http://dvcs.w3.org/hg/dap/raw-file/tip/battery/Overview.html">http://dvcs.w3.org/hg/dap/raw-file/tip/battery/Overview.html</a>-->
+<script>
+    var battery = navigator.battery ||
+            navigator.webkitBattery ||
+            navigator.mozBattery;
+
+    console.log(battery);
+
+    if (battery) {
+        updateLevel(battery.level);
+        updateCharging(battery.charging);
+
+        battery.onlevelchange = function () {
+            console.log('level changed');
+            updateLevel(battery.level);
+        };
+
+        battery.onchargingchange = function () {
+            console.log('charging changed');
+            updateCharging(battery.charging);
+        };
+
+        battery.ondischargingtimechange = function () {
+            document.querySelector('#dischargingTime').textContent = battery.dischargingTime / 60;
+        };
+    }
+    else{
+        updateLevel(.5);
+        updateCharging(true);
+    }
+
+
+    function updateLevel(level) {
+        var status = document.querySelector("#battery .status");
+        status.style.width = (level * 100) + "%";
+    }
+
+    function updateCharging(charging) {
+        var battery = document.querySelector("#battery");
+
+        if (charging) {
+            battery.classList.add("charging");
+        }
+        else {
+            battery.classList.remove("charging");
+        }
+    }
+
+</script>
+</body>
+</html>
