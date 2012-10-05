@@ -146,6 +146,9 @@
         updateConnection(connection.bandwidth);
     }, 500);
 
+    connection.addEventListener('change', function() {
+        updateConnection(connection.bandwidth);
+    });
 
     function updateConnection(mbps){
         var counter = document.querySelector('#counter');
@@ -153,6 +156,8 @@
         counter.className = '';
         counter.classList.add(speedClass);
     }
+
+    <!--TODO: Add example of connection.metered -->
 
 </script>
 
