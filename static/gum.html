@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #canvas {
+            width: 150px;
+            height: 120px;
+            margin-left: -75px;
+            left: 50%;
+            position: absolute;
+            margin-top: 15px;
+        }
+
+        #video {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #666;
+            width: 80%;
+            height: 100%;
+        }
+
+        .side {
+            position: absolute;
+            width: 20%;
+            min-width: 170px;
+            height: 100%;
+            background:-webkit-gradient(radial, center center, 250, center center, 20, from(#333), to(#666));
+            top: 0;
+            right: 0;
+        }
+
+        .button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-left: -20px;
+            margin-top: -20px;
+            display: block;
+            width: 32px;
+            height: 32px;
+            border-radius: 50px;
+            font-size: 10px;
+            color: #fff;
+            line-height: 32px;
+            text-align: center;
+            background: #2FAAE0;
+            border: 4px solid #131313;
+        }
+
+        .circle {
+            position: absolute;
+            width: 66px;
+            height: 66px;
+            border-radius: 50px;
+            font-size: 20px;
+            color: #fff;
+            line-height: 66px;
+            text-align: center;
+            background-color:#282828;
+
+            top: 50%;
+            left: 50%;
+            margin-left: -33px;
+            margin-top: -33px;
+        }
+    </style>
+</head>
+<body>
+
+<video id="video" autoplay="autoplay"></video>
+
+
+<div class="side">
+    <canvas id="canvas"></canvas>
+    <div class="circle">
+        <a href="#" class="button" onclick="snapshot();"></a>
+    </div>
+
+</div>
+
+<script>
+    window.URL = window.URL || window.webkitURL;
+    navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia ||
+            navigator.msGetUserMedia;
+
+    var onGumSuccess = function (stream) {
+        var url = webkitURL.createObjectURL(stream);
+        video.src = url;
+    };
+
+    var onGumFailure = function () {
+        alert('unable to get usermedia');
+    };
+
+    requestUserMedia = function () {
+        if (navigator.getUserMedia) {
+            navigator.getUserMedia({video:true}, onGumSuccess, onGumFailure);
+        }
+        else {
+            // Sorry not supported, but enjoy this great film!
+            showVideo('http://video.webmfiles.org/big-buck-bunny_trailer.webm');
+        }
+    };
+
+    snapshot = function () {
+        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+    };
+
+    updateFilter = function () {
+        video.className = 'show';
+        video.classList.add(filter.options[filter.selectedIndex].value);
+    };
+
+    showVideo = function (url) {
+        video.src = url;
+    };
+
+    requestUserMedia();
+
+</script>
+
+
+</body>
+</html>
