@@ -16,6 +16,8 @@ app.use("/", express.static(__dirname + '/static'));
 
 
 io.sockets.on('connection', function (socket) {
+    socket.emit('connection', {});
+
     socket.on('message', function(msg){
         console.log('message', msg);
         socket.broadcast.emit('msg', msg);

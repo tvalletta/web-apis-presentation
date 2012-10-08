@@ -106,16 +106,6 @@
             border-color: #FFFFFF;
             margin: 2px;
         }
-
-        #logo {
-            display: block;
-            top: 4;
-            right: 4;
-            position: absolute;
-            float: right;
-            opacity: 0.5;
-        }
-
     </style>
 </head>
 <body>
@@ -132,13 +122,16 @@ var channelReady = false;
 var pc;
 var socket;
 
-var initiator = window.location.hash === '' ? 0 : 1;
+var initiator = window.location.hash == '' ? 0 : 1;
 
 var started = false;
 var isRTCPeerConnection = true;
 var mediaConstraints = {'has_audio':true, 'has_video':true};
+var roomNumber;
 
-console.log('location', window.location.hash);
+function generateRoomNumber(){
+    return Math.random().toString(36).substring(7);
+}
 
 function initialize() {
     console.log("Initializing");
@@ -146,6 +139,12 @@ function initialize() {
     localVideo = document.getElementById("localVideo");
     miniVideo = document.getElementById("miniVideo");
     remoteVideo = document.getElementById("remoteVideo");
+
+    if(!initiator){
+        roomNumber = generateRoomNumber();
+        console.log('Hosting room number: ' + roomNumber);
+    }
+
     resetStatus();
     openChannel();
     getUserMedia();
@@ -164,7 +163,7 @@ function openChannel() {
 function resetStatus() {
     if (!initiator) {
 //        setStatus("Waiting for someone to join: <a href=\"https://apprtc.appspot.com/?r=82832005\">https://apprtc.appspot.com/?r=82832005</a>");
-        setStatus("Waiting for someone to join: <a href=\"https://apprtc.appspot.com/?r=82832005\">https://apprtc.appspot.com/?r=82832005</a>");
+        setStatus('Waiting for someone to join: <a href="https://webapi.aws.af.cm/apprtc.html#join=' + roomNumber + '">https://webapi.aws.af.cm/apprtc.html#join=' + roomNumber +'</a>');
     } else {
         setStatus("Initializing...");
     }
@@ -453,7 +452,7 @@ function transitionToDone() {
     localVideo.style.opacity = 0;
     remoteVideo.style.opacity = 0;
     miniVideo.style.opacity = 0;
-    setStatus("You have left the call. <a href=\"https://apprtc.appspot.com/?r=82832005\">Click here</a> to rejoin.");
+    setStatus("You have left the call. <a href=\"https://webapi.aws.af.cm/apprtc.html#join\">Click here</a> to rejoin.");
 }
 
 
@@ -482,11 +481,7 @@ window.onbeforeunload = function () {
             </div>
         </div>
     </div>
-    <div id="footer">
-    </div>
+    <div id="footer"></div>
 </div>
-<a href="http://www.webrtc.org">
-    <img id="logo" alt="WebRTC" src="images/webrtc_black_20p.png">
-</a>
 </body>
 </html>
