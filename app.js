@@ -22,4 +22,8 @@ io.sockets.on('connection', function (socket) {
         console.log('message', msg);
         socket.broadcast.emit('msg', msg);
     });
+
+    socket.on('remote value', function(data) {
+		socket.broadcast.emit('remote', data);
+    });
 });

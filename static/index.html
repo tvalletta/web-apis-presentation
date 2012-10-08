@@ -9,14 +9,36 @@
         <link href="css/prettify.css" rel="stylesheet" />
         <script type="text/javascript" src='js/jquery-1.8.2.min.js'></script>
         <script type="text/javascript" src='js/prettify.js'></script>
+	    <script src="/socket.io/socket.io.js"></script>
         <style type="text/css">
         	pre.prettyprint {
 				font-family: "Courier New", Monaco, "Lucida Console", monospace;
 				font-weight: bold;
         	}
+        	div.remote {
+        		opacity: 0;
+			    -webkit-transition: .5s;
+			    -moz-transition:    .5s;
+			    -ms-transition:     .5s;
+			    -o-transition:      .5s;
+			    transition:         .5s;
+
+        		height: 150px;
+        		width: 600px;
+        		position: fixed;
+        		top: 20px;
+        		right: 20px;
+
+        		text-align: right;
+        		font-size: 72px;
+        	}
+        	div.remote.show {
+        		opacity: 0.7;
+        	}
         </style>
     </head>
     <body onload='prettyPrint()'>
+    	<div class='remote'></div>
 		<p class="fallback-message">
 		    Your browser doesn't support impress.js.  Try Chrome or Safari.
 		</p>
@@ -44,20 +66,17 @@
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="1058" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js'>
-window.addEventListener(
-  'devicelight', 
-  function(event) {
-    console.log(event.value);
-  }
-);
+<pre class='prettyprint lang-js' style='position: relative; left: -160px; font-size: 36px'>
+window.addEventListener('devicelight', function(e) {
+  alert(e.value);
+});
 </pre>
 			</div>
 			<div class="step" data-x="100" data-y="1173" data-z="-800" data-scale=".8" data-focus='archive'>
 			
 			</div>
 			<div class="step" data-x="426.5" data-y="1131" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js' style='position: relative; left: -240px'>
+<pre class='prettyprint lang-js' style='position: relative; left: -140px; font-size: 36px'>
 var blob = ...;
 var reader = ArchiveReader(blob);
  
@@ -73,17 +92,36 @@ h.onsuccess = function() {
 			<div class="step" data-x="100" data-y="1246" data-z="-800" data-scale=".8" data-focus='battery'>
 				
 			</div>
-			<div class="step" data-x="100" data-y="1204" data-z="-800" data-scale=".08">
-				
+			<div class="step" data-x="426.5" data-y="1204" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -180px; font-size: 32px'>
+navigator.mozBattery.onlevelchange = function() {
+	alert(battery.level);
+}
+navigator.mozBattery.onchargingchange = function() {
+	alert(battery.charging);
+}
+navigator.mozBattery.ondischargingtimechange = function() {
+	alert(battery.dischargingTime);
+}
+</pre>
 			</div>
 			<div class="step" data-x="100" data-y="1319" data-z="-800" data-scale=".8" data-focus='geolocation'>
 				
+			</div>
+			<div class="step" data-x="426.5" data-y="1277" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -200px; font-size: 36px'>
+navigator.geolocation.getCurrentPosition(function() {
+  latitude = position.coords.latitude;
+  longitude = position.coords.longitude;
+  accuracy = position.coords.accuracy;	
+});
+</pre>
 			</div>
 			<div class="step" data-x="100" data-y="1392" data-z="-800" data-scale=".8" data-focus='file'>
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="1350" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js'>
+<pre class='prettyprint lang-js' style='position: relative; left: -40px; font-size: 36px'>
 var lockedFile = myFile.open();
 var request = lockedFile.readAsText(3);
 request.onsuccess = function(event) {
@@ -97,7 +135,7 @@ request.onsuccess = function(event) {
 			</div>
 			<div class="step" data-x="426.5" data-y="1423" data-z="-800" data-scale=".08">
 <pre class='prettyprint lang-js'>
-navigator.addIdelObserver({
+navigator.addIdleObserver({
   time: 10, // seconds
   onidle: idleHandler, // fn
   onactive: activeHandler // fn
@@ -108,7 +146,7 @@ navigator.addIdelObserver({
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="1496" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js' style='position: relative; left: -240px'>
+<pre class='prettyprint lang-js' style='position: relative; left: -140px; font-size: 36px'>
 var request = indexedDB.open('AddressBook', 15);
 request.onsuccess = function(evt) {...};
 request.onerror = function(evt) {...};
@@ -116,6 +154,13 @@ request.onerror = function(evt) {...};
 			</div>
 			<div class="step" data-x="100" data-y="1611" data-z="-800" data-scale=".8" data-focus='media'>
 				
+			</div>
+			<div class="step" data-x="426.5" data-y="1569" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -200px; font-size: 36px'>
+&lt;input type="file" accept="image/*;capture=camera"&gt;
+&lt;input type="file" accept="video/*;capture=camcorder"&gt;
+&lt;input type="file" accept="audio/*;capture=microphone"&gt;
+</pre>
 			</div>
 			<div class="step" data-x="100" data-y="1684" data-z="-800" data-scale=".8" data-focus='mouse'>
 				
@@ -132,6 +177,14 @@ elem.requestPointerLock();
 			<div class="step" data-x="100" data-y="1757" data-z="-800" data-scale=".8" data-focus='network'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="1715" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -160px; font-size: 36px'>
+var connection = navigator.mozConnection;
+connection.addEventListener('change', function() {
+  alert(connection.bandwidth);
+});
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="1830" data-z="-800" data-scale=".8" data-focus='open'>
 				
 			</div>
@@ -146,7 +199,7 @@ navigator.mozApps.getInstalled();
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="1861" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js' style='position: relative; left: -250px'>
+<pre class='prettyprint lang-js' style='position: relative; left: -150px; font-size: 36px'>
 window.addEventListener("userproximity", fn, true);
 function fn(event) {
   if (event.near) 
@@ -159,22 +212,30 @@ function fn(event) {
 			<div class="step" data-x="100" data-y="1976" data-z="-800" data-scale=".8" data-focus='screen'>
 				
 			</div>
+			<div class="step" data-x="426.5" data-y="1934" data-z="-800" data-scale=".08">
+<pre class='prettyprint lang-js' style='position: relative; left: -120px; font-size: 32px'>
+window.addEventListener(orientationEvent, function() {
+    alert(window.orientation);
+}, false);
+
+// Recently Added 
+screen.lockOrientation('portrait-primary');
+screen.unlockOrientation();
+</pre>
+			</div>
 			<div class="step" data-x="100" data-y="2049" data-z="-800" data-scale=".8" data-focus='sms'>
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="2007" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js'>
+<pre class='prettyprint lang-js' style='position: relative; left: -140px; font-size: 36px'>
 // Done but not shipped :(
-window.addEventListener(
-  'smsevent', 
-  function(event) {
-    switch(event.type) {
-      case 'smssent': ...
-      case 'smsdelivered': ...
-      case 'smsreceived': ...
-    }
+window.addEventListener('smsevent', function(e) {
+  switch(e.type) {
+    case 'smssent': ...
+    case 'smsdelivered': ...
+    case 'smsreceived': ...
   }
-);
+});
 </pre>
 			</div>
 			<div class="step" data-x="100" data-y="2122" data-z="-800" data-scale=".8" data-focus='time'>
@@ -192,7 +253,7 @@ clock.set(ticks); // POSIX time
 				
 			</div>
 			<div class="step" data-x="426.5" data-y="2153" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js' style='position: relative; left: -240px; font-size: 36px'>
+<pre class='prettyprint lang-js' style='position: relative; left: -180px; font-size: 36px'>
 var call = navigator.mozTelephony.dial("8012401000");
 call.addEventListener('readystatechange', function() {
 	console.log('readyState');
@@ -212,7 +273,7 @@ navigator.mozTelephony.addEventListener('incoming',
 			<div class="step" data-x="426.5" data-y="2226" data-z="-800" data-scale=".08">
 <pre class='prettyprint lang-js' style='position: relative; left: -100px'>
 navigator.mozVibrate(600);
-navigator.mozVibrate([200, 100, 200, 100]);
+navigator.mozVibrate([50, 100, 200]);
 navigator.mozVibrate(0);
 </pre>
 			</div>
@@ -230,31 +291,31 @@ navigator.mozVibrate(0);
 			    			<td class='title'>Ambient Light Sensor</td>
 			    			<td>√</td>
 			    			<td>√</td>
-			    			<td class='detail'>&nbsp;</td>
+			    			<td>&nbsp;</td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='archive'>
 			    			<td class='title'>Archive</td>
 			    			<td>√</td>
 			    			<td>√</td>
-			    			<td class='detail'>&nbsp;</td>
+			    			<td>&nbsp;</td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='battery'>
 			    			<td class='title'>*Battery</td>
 			    			<td>√</td>
 			    			<td>√</td>
-			    			<td class='detail'>&nbsp;</td>
+			    			<td>&nbsp;</td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='geolocation'>
 			    			<td class='title'>*Geolocation</td>
 			    			<td></td>
 			    			<td>√</td>
-			    			<td class='detail'>&nbsp;</td>
+			    			<td>&nbsp;</td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='file'>
 			    			<td class='title'>File Handle</td>
 			    			<td></td>
 			    			<td>√</td>
-			    			<td class='detail'>&nbsp;</td>
+			    			<td>&nbsp;</td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='idle'>
 			    			<td class='title'>Idle</td>
@@ -434,6 +495,25 @@ navigator.mozVibrate(0);
 		</div>
     <script type="text/javascript" src="js/impress.js"></script>
     <script>
+    	var $remote = $('.remote');
+    	var timer = null;
+
+        document.addEventListener('DOMContentLoaded', function () {
+            socket = io.connect('http://localhost');
+
+            socket.on('remote', function(data) {
+                $remote.text(data);
+
+                if (timer) clearTimeout(timer);
+                if (!$remote.hasClass('show'))
+	                $remote.addClass('show');
+
+                timer = setTimeout(function() {
+                	$remote.removeClass('show');
+                }, 5000)
+            });
+        });
+
     	var el = document.getElementById("impress");
     	impress().init();
 

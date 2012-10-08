@@ -4,17 +4,15 @@
     <title></title>
 </head>
 <body>
+	Vibrate
 <script>
     function buzz(){
         alert('buzz');
     }
 
-    setTimeout(function(){
-
-        var vibrate = navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || buzz;
-//        alert(vibrate);
-        vibrate([50,100,150]);
-    },1000);
+    setTimeout(function() {
+    	navigator.mozVibrate([50,100,150]);
+    }, 1000);
 </script>
 
 </body>
