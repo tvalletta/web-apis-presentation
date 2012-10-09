@@ -127,6 +127,20 @@
 
     requestUserMedia();
 
+<!--
+    navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia || navigator.msGetUserMedia;
+    window.URL = window.URL || window.webkitURL;
+
+    navigator.getUserMedia({video: true}, function(localMediaStream) {
+        var video = document.createElement("video");
+        video.autoplay = true;
+        video.src = window.URL.createObjectURL(localMediaStream);
+        document.body.appendChild(video);
+    }, function(error) {
+        console.log(error);
+    });
+    -->
 </script>
 
 

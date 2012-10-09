@@ -110,6 +110,8 @@
 </head>
 <body>
 
+<!--http://www.html5rocks.com/en/tutorials/webrtc/basics/-->
+
 <script type="text/javascript">
 
 var localVideo;
@@ -153,7 +155,8 @@ function initialize() {
 function openChannel() {
     console.log("Opening channel.");
 
-    socket = io.connect('http://localhost');
+//    socket = io.connect('http://localhost');
+    socket = io.connect('http://http://webapi.aws.af.cm');
 
     socket.on('connection', onChannelOpened);
     socket.on('disconnect', onChannelClosed);
@@ -221,13 +224,12 @@ function createPeerConnection() {
 }
 
 function maybeStart() {
-    console.log('maybe start', started, localStream, channelReady);
     if (!started && localStream && channelReady) {
         setStatus("Connecting...");
         console.log("Creating PeerConnection.");
         createPeerConnection();
         console.log("Adding local stream.");
-        pc.addStream(localStream);
+        pc.x(localStream);
         started = true;
         // Caller initiates offer to peer.
         if (initiator)
@@ -336,7 +338,7 @@ function onUserMediaSuccess(stream) {
     console.log("User has granted access to local media.");
     var url = webkitURL.createObjectURL(stream);
     localVideo.style.opacity = 1;
-    localVideo.src = url;
+    localVideo.x = url;
     localStream = stream;
     // Caller creates PeerConnection.
     if (initiator) maybeStart();
