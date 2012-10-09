@@ -155,18 +155,49 @@ request.onerror = function(evt) {...};
 			<div class="step" data-x="100" data-y="1611" data-z="-800" data-scale=".8" data-focus='media'>
 				
 			</div>
-			<div class="step" data-x="426.5" data-y="1569" data-z="-800" data-scale=".08">
-<pre class='prettyprint lang-js' style='position: relative; left: -200px; font-size: 36px'>
+			<div class="step invisible" data-x="-100" data-y="1611" data-z="-800" data-scale=".8" data-rotate-y="90" data-focus='media'>
+				<h2>Media Capture</h2>
+<pre class='prettyprint lang-js' style='position: relative; left: -80px; font-size: 28px'>
 &lt;input type="file" accept="image/*;capture=camera"&gt;
 &lt;input type="file" accept="video/*;capture=camcorder"&gt;
 &lt;input type="file" accept="audio/*;capture=microphone"&gt;
 </pre>
 			</div>
-			<div class="step invisible" data-x="100" data-y="1611" data-z="-800" data-scale=".8" data-rotate-y="90" data-focus='media'>
-				<h2>Get User Media</h2>
+<!-- 			
+			<div class="step" data-x="426.5" data-y="1569" data-z="-800" data-scale=".08">
 			</div>
-			<div class="step invisible" data-x="0" data-y="1611" data-z="-800" data-scale=".8" data-rotate-y="90" data-focus='media'>
+ -->				
+			<div class="step invisible" data-x="-300" data-y="1611" data-z="-800" data-scale=".8" data-rotate-y="90" data-focus='media'>
+ 				<h2>Get User Media</h2>
+<pre class='prettyprint lang-js' style='position: relative; left: -140px; font-size: 28px'>
+navigator.getUserMedia = navigator.getUserMedia || 
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia || 
+    navigator.msGetUserMedia;
+window.URL = window.URL || window.webkitURL;
+
+navigator.getUserMedia({video: true}, function(localMediaStream) {
+  var video = document.createElement("video");
+  video.autoplay = true;
+  video.src = window.URL.createObjectURL(localMediaStream);
+  document.body.appendChild(video);
+}, function(error) {
+  console.log(error);
+});
+</pre>
+			</div>
+			<div class="step invisible" data-x="-500" data-y="1611" data-z="-800" data-scale=".8" data-rotate-y="90" data-focus='media'>
 				<h2>WebRTC</h2>
+				<h4>Real-time communication without plugins</h4>
+			</div>
+			<div class="step invisible" data-x="-700" data-y="1611" data-z="-800" data-scale=".8" data-rotate-y="90" data-focus='media'>
+				<img src='img/webrtc.jpg'/>
+				<ul style='font-size: 36px; list-style: disc'>
+					<li>Get streaming audio and video</li>
+					<li>Communicate streaming audio, video, or data</li>
+					<li>Exchange control messages to initiate or control sessions.</li>
+					<li>Exchange information about media (resolution, format)</li>
+				</ul>
 			</div>
 			<div class="step" data-x="100" data-y="1684" data-z="-800" data-scale=".8" data-focus='mouse'>
 				
@@ -334,7 +365,7 @@ navigator.mozVibrate(0);
 			    			<td>√</td>
 			    		</tr>
 			    		<tr class='focus' data-focus-id='media'>
-			    			<td class='title'>Media Capture</td>
+			    			<td class='title'>Media</td>
 			    			<td>√</td>
 			    			<td>√</td>
 			    		</tr>
