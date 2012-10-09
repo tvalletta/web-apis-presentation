@@ -125,6 +125,7 @@ var pc;
 var socket;
 
 var initiator = window.location.hash == '' ? 0 : 1;
+console.log('initiator', initiator);
 
 var started = false;
 var isRTCPeerConnection = true;
@@ -155,8 +156,8 @@ function initialize() {
 function openChannel() {
     console.log("Opening channel.");
 
-//    socket = io.connect('http://localhost');
-    socket = io.connect('http://http://webapi.aws.af.cm');
+    socket = io.connect('http://localhost');
+//    socket = io.connect('http://http://webapi.aws.af.cm');
 
     socket.on('connection', onChannelOpened);
     socket.on('disconnect', onChannelClosed);
@@ -229,7 +230,7 @@ function maybeStart() {
         console.log("Creating PeerConnection.");
         createPeerConnection();
         console.log("Adding local stream.");
-        pc.x(localStream);
+        pc.addStream(localStream);
         started = true;
         // Caller initiates offer to peer.
         if (initiator)
@@ -338,7 +339,7 @@ function onUserMediaSuccess(stream) {
     console.log("User has granted access to local media.");
     var url = webkitURL.createObjectURL(stream);
     localVideo.style.opacity = 1;
-    localVideo.x = url;
+    localVideo.src = url;
     localStream = stream;
     // Caller creates PeerConnection.
     if (initiator) maybeStart();
