@@ -42,7 +42,7 @@
 		<p class="fallback-message">
 		    Your browser doesn't support impress.js.  Try Chrome or Safari.
 		</p>
-		<div id="impress">
+		<div id="impress" ondblclick="enterFullScreen()">
 			<div id="title" class="step" data-x="600" data-y="0" data-z="-500" data-rotate-y="-75">
 			    <h1>Mobile Web APIs</h1>
 			    <h4>By Gabriel Dayley &amp; Thomas A. Valletta</h4>
@@ -574,6 +574,16 @@ navigator.mozVibrate(0);
     		}
     		focusList = [];
         }, false);
+
+    	$(document).bind('keypress', function(e) {
+    		if (e.keyCode === 102) {
+    			$('#impress')[0].webkitRequestFullScreen();
+    		}
+    	});
+
+    	function enterFullScreen() {
+		    remote.webkitRequestFullScreen();
+		}
 
     </script>
     </body>
