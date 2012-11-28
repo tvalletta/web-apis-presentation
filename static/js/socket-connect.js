@@ -1,2 +1,2 @@
 //socket = io.connect('http://10.88.32.190');
-socket = io.connect('http://localhost');
+socket = io.connect('http://192.168.1.126');

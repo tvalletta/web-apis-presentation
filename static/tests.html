@@ -2,15 +2,61 @@
 <head>
 	<title>tests</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+		@font-face {
+		    font-family: 'QlassikMediumRegular';
+		    src: url('css/font/Qlassik-Medium/Qlassik_TB-webfont.eot');
+		    src: url('css/font/Qlassik-Medium/Qlassik_TB-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('css/font/Qlassik-Medium/Qlassik_TB-webfont.woff') format('woff'),
+		         url('css/font/Qlassik-Medium/Qlassik_TB-webfont.ttf') format('truetype'),
+		         url('css/font/Qlassik-Medium/Qlassik_TB-webfont.svg#QlassikMediumRegular') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+
+		@font-face {
+		    font-family: 'QlassikBoldRegular';
+		    src: url('css/font/Qlassik-Medium/QlassikBold_TB-webfont.eot');
+		    src: url('css/font/Qlassik-Medium/QlassikBold_TB-webfont.eot?#iefix') format('embedded-opentype'),
+		         url('css/font/Qlassik-Medium/QlassikBold_TB-webfont.woff') format('woff'),
+		         url('css/font/Qlassik-Medium/QlassikBold_TB-webfont.ttf') format('truetype'),
+		         url('css/font/Qlassik-Medium/QlassikBold_TB-webfont.svg#QlassikBoldRegular') format('svg');
+		    font-weight: normal;
+		    font-style: normal;
+		}
+
+		body {
+			background-color: #ddd;
+		}
+
+    	a, h2 {
+    		font-size: 2em;
+    		line-height: 1.4em;
+		    font-family: 'QlassikMediumRegular', sans-serif;
+		    text-decoration: none;
+		    text-shadow: 2px 2px 4px #999;
+    	}
+
+    	h2 {
+    		color: #fff;
+    		line-height: 2em;
+    		background-color: #bbb;
+    		text-align: center;
+		    text-shadow: 0px 0px 5px #666;
+    	}
+    </style>
 </head>
 <body>
-	<a href='ambient-light-test.html'>Ambient Light Test</a><br/>
-	<a href='battery.html'>Battery</a><br/>
-	<a href='gum.html'>Gum</a><br/>
-	<a href='media-capture.html'>Media Capture</a><br/>
-	<a href='network-info.html'>Network Info</a><br/>
-	<a href='vibration.html'>Vibration</a><br/>
-	<a href='http://robnyman.github.com/vibration/'>Vibration</a><br/>
-	<a href='apprtc.html'>WebRTC</a><br/>
+	<h2>Web API Demos</h2>
+	<ul>
+		<li><a href='ambient-light-test.html'>Ambient Light Test</a><br/></li>
+		<li><a href='battery.html'>Battery</a><br/></li>
+		<li><a href='gum.html'>Gum</a><br/></li>
+		<li><a href='media-capture.html'>Media Capture</a><br/></li>
+		<li><a href='network-info.html'>Network Info</a><br/></li>
+		<li><a href='vibration.html'>Vibration</a><br/></li>
+		<li><a href='http://robnyman.github.com/vibration/'>Vibration</a><br/></li>
+		<li><a href='apprtc.html'>WebRTC</a><br/></li>
+	</li>
 </body>
 </html>

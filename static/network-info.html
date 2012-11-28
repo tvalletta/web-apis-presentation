@@ -156,6 +156,7 @@ $(function() {
     });
 
     function updateConnection(mbps){
+        alert(mbps);
         var counter = document.querySelector('#counter');
         var speedClass = mbps > 15 ? "blazing" : mbps > 10 ? "fast" : mbps > 5 ? "med" : mbps > 0 ? "slow" : "offline";
         counter.className = '';

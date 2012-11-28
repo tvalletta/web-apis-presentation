@@ -89,6 +89,7 @@
 <script>
     window.URL = window.URL || window.webkitURL;
     navigator.getUserMedia = navigator.getUserMedia ||
+            navigator.oGetUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia;
