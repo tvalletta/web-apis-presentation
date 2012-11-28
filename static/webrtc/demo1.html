@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="../css/webrtc.css">
+</head>
+<body>
+<!--<h1>WebRTC</h1>-->
+
+<div id="container">
+    <div class="left">
+        <video id="local" autoplay="true" src=""></video>
+    </div>
+    <div class="right">
+        <video id="remote" autoplay="true"></video>
+    </div>
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+    // Configuration Variables
+    var pc_config = {"iceServers":[{"url":"stun:stun.l.google.com:19302"}]};
+    var mediaConstraints = {'mandatory': {'OfferToReceiveAudio':true, 'OfferToReceiveVideo':true}};
+
+
+    // Connect to WebSocket and Create Listeners
+    var socket = io.connect('http://10.88.92.214');
+
+    socket.on('connection', function(){
+        console.log('ws connected');
+    });
+
+    socket.on('msg', function(msg){
+//        console.log('ws message', msg);
+        if (msg.type === 'offer') {
+            createPeerConnection();
+
+            pc.setRemoteDescription(new RTCSessionDescription(msg));
+
+            doAnswer();
+
+        } else if (msg.type === 'answer') {
+            pc.setRemoteDescription(new RTCSessionDescription(msg));
+        } else if (msg.type === 'candidate') {
+            var candidate = new RTCIceCandidate({sdpMLineIndex:msg.label,
+                candidate:msg.candidate});
+            pc.addIceCandidate(candidate);
+        }
+    });
+
+    // Request User Media
+    navigator.webkitGetUserMedia({'audio': true, 'video': true}, getUserMediaSuccess);
+
+    function getUserMediaSuccess(stream){
+        localStream = stream;
+        local.src = webkitURL.createObjectURL(stream);
+    }
+
+
+    // Create PeerConnection
+    function createPeerConnection(){
+        console.log('Creating Peer Connection');
+
+        pc = new webkitRTCPeerConnection(pc_config);
+        pc.onicecandidate = onIceCandidate;
+
+        pc.onaddstream = function(event){
+            console.log("Remote Stream Added");
+            remote.src = webkitURL.createObjectURL(event.stream);
+        };
+
+        pc.addStream(localStream);
+    }
+
+    // Send Answer
+    function doAnswer(){
+        console.log('Sending Answer');
+
+        pc.createAnswer(function(sd){
+            pc.setLocalDescription(sd);
+            socket.emit('message', sd);
+        });
+    }
+
+    // Send Offer
+    function doCall(){
+        console.log('Calling');
+
+        pc.createOffer(function(sd){
+            pc.setLocalDescription(sd);
+            socket.emit('message', sd);
+        }, null, mediaConstraints);
+    }
+
+    // Callback for IceCandidate
+    function onIceCandidate(event) {
+        if (event.candidate) {
+            socket.emit('message', {type:'candidate',
+                label:event.candidate.sdpMLineIndex,
+                id:event.candidate.sdpMid,
+                candidate:event.candidate.candidate});
+        } else {
+            console.log("End of candidates.");
+        }
+    }
+</script>
+
+</body>
+</html>
