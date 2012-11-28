@@ -2,18 +2,52 @@
 <html>
 <head>
     <title></title>
+
+    <style>
+        button{
+            background: #333;
+            color: white;
+            padding: 20px;
+            font-size: 28px;
+            /*text-shadow: 2px 1px 1px #777;*/
+            width: 100%;
+            border: 2px solid black;
+            margin: 5px;
+        }
+
+        button:hover{
+            background: #666;
+        }
+
+        button:active{
+            background: green;
+        }
+    </style>
 </head>
 <body>
-	Vibrate
+
+<button id="v1">Vibrate Once</button>
+<button id="v2">Vibrate Twice</button>
+<button id="v3">Vibrate Long</button>
+<button id="v4">Stop Vibration</button>
+
+
 <script>
-    function buzz(){
-        alert('buzz');
-    }
+    document.getElementById('v1').addEventListener('click', function(){
+        navigator.mozVibrate(1000);
+    }, false);
 
-    setTimeout(function() {
-    	navigator.mozVibrate([50,100,150]);
-    }, 1000);
+    document.getElementById('v2').addEventListener('click', function(){
+        navigator.mozVibrate([200, 100, 200, 100]);
+    }, false);
+
+    document.getElementById('v3').addEventListener('click', function(){
+        navigator.mozVibrate(8000);
+    }, false);
+
+    document.getElementById('v4').addEventListener('click', function(){
+        navigator.mozVibrate(0);
+    }, false);
 </script>
-
 </body>
 </html>

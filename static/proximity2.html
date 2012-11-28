@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src='js/jquery-1.8.2.min.js'></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/socket-connect.js"></script>
+
+    <style>
+        .far{
+            background: green;
+        }
+        .near {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+
+    function fn(event) {
+        if (event.near) {
+            console.log("Near");
+            this.source.noteOff(0);
+//            document.querySelector('body').className = "near";
+//            socket.emit('remote value', "Near");
+        }
+        else {
+            console.log("Far");
+            this.source.noteOn(0);
+//            document.querySelector('body').className = "far";
+//            socket.emit('remote value', "Far");
+        }
+    }
+
+
+
+    var source = null;
+    var buffer = null;
+    var context = new webkitAudioContext();
+
+    function loadSound(url) {
+        var request = new XMLHttpRequest();
+        request.open('GET', url, true);
+        request.responseType = 'arraybuffer';
+
+        // Decode asynchronously
+        request.onload = function() {
+            context.decodeAudioData(request.response, function(buffer) {
+//                buffer = buffer;
+
+                playSound(buffer);
+
+//                window.addEventListener("userproximity", fn, true);
+
+            }, function(){console.log('error loading sound')});
+        };
+
+        request.send();
+    }
+
+    function playSound(buffer) {
+        source = context.createBufferSource(); // creates a sound source
+        source.buffer = buffer;                    // tell the source which sound to play
+        source.connect(context.destination);       // connect the source to the context's destination (the speakers)
+        source.noteOn(0);                          // play the source now
+    }
+
+    loadSound('derezzed.mp3');
+
+</script>
+
+</body>
+</html>
