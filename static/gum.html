@@ -87,9 +87,10 @@
 </div>
 
 <script>
+    var video = document.getElementById('video');
+
     window.URL = window.URL || window.webkitURL;
     navigator.getUserMedia = navigator.getUserMedia ||
-            navigator.oGetUserMedia ||
             navigator.webkitGetUserMedia ||
             navigator.mozGetUserMedia ||
             navigator.msGetUserMedia;
