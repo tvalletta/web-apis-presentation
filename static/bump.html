@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Bump</title>
+		<script type="text/javascript" src="js/socket.io.js"></script>
+    	<script src="js/socket-connect.js"></script>
+		<script type="text/javascript">
+            // var socket = io.connect('http://10.0.0.126:3000');
+            var socket = io.connect('http://192.168.1.126:3001');
+            var shakelock = false;
+            var shakes = new Array(10);
+            var cnt = 0;
+
+            // ----------------------------------------------------------------
+            //    Socket Handling
+            socket.on('timestamp', recieveTimestamp)
+            socket.on('match', function(data) {
+            	alert(data.id);
+            });
+
+            // ----------------------------------------------------------------
+            //    Chronosync 
+            // Sends several timestamps back and forth with the server in order
+            // to establish the latency between the client and the server
+            function chronosync() {
+                setTimeout(function() {
+                    for (var i = 0; i < 6; i++) {
+                        (function(i) {
+                            setTimeout(function() {
+                                sendTimestamp(i);
+                            }, i * 50);
+                        })(i);
+                    }
+                }, 50);
+            }
+            function sendTimestamp(id) {
+                var now = +new Date();
+            	socket.emit('timestamp', {id: id, ct: now});
+            }
+            function recieveTimestamp(data) {
+                sendTimestamp(data.id);
+            }
+
+            // ----------------------------------------------------------------
+            //    Math Stuff
+            // Simple mathmatical functions for determining the average 
+            // accelerometer values, the variance, and the standard deviation
+            function average(array) {
+                var sum = {x: 0, y: 0, z: 0};
+                for (var i = 0; i < array.length; i++) {
+                    var item = array[i];
+                    sum.x += item.x;
+                    sum.y += item.y;
+                    sum.z += item.z;
+                }
+                return {
+                    x: sum.x / array.length,
+                    y: sum.y / array.length,
+                    z: sum.z / array.length
+                };
+            }
+            function variance(array, avg) {
+                var v = 0;
+                for (var i = 0; i < array.length; i++) {
+                    v += Math.pow((array[i].x - avg), 2 );
+                }
+                return v / array.length;
+            }
+            function standardDev(vrc) {
+                return Math.sqrt(vrc);
+            }
+
+            // ----------------------------------------------------------------
+            //    Motion Handling
+            // This function is called every time the device moves (and 
+            // sometimes when it doesn't).  It does the math to determine 
+            // whether movement constitutes a bump.  If it does, it sends the
+            // current gps coordinates and the time that it took to find the
+            // coordinates (since that happens asynchronously).
+            function motionHandler(e) {
+                var accel = e.accelerationIncludingGravity;
+
+                shakes.shift();
+                shakes.push(accel);
+
+                if (cnt < 10) {cnt++; return;}
+
+                var avg = average(shakes),
+                    vrc = variance(shakes, avg.x),
+                    std = standardDev(vrc);
+
+                // The motion is considered a bump if the device is held
+                // vertically, the standard deviation of x is greater than two,
+                // and the current accelerometer rating is more than the 
+                // standard deviation
+                if (Math.abs(avg.y) >= 7 && 
+                    Math.abs(std) >= 2 && 
+                    Math.abs(shakes[9].x - shakes[8].x) > std &&
+                    (accel.x > (avg.x + std) || accel.x < (avg.x - std))) {
+
+                    // Shakelock keeps it from constantly sending the same 
+                    // bump more than once
+                    if (!shakelock) {
+                        var start = +new Date();
+                        navigator.geolocation.getCurrentPosition(function(position) {
+                            socket.emit('position', {
+                                pos: position,
+                                elapsed: +new Date() - start
+                            });
+                        });
+
+                        shakelock = true;
+                        setTimeout(function() {
+                            shakelock = false;
+                        }, 300);
+                    }
+                }
+            }
+
+            // ----------------------------------------------------------------
+            //    Timers
+            // Start the chronosync shortly after the page is loaded.  Turn on
+            // the motion detections a second later.
+            setTimeout(chronosync, 45);
+            setTimeout(chronosync, 10000);
+            setInterval(chronosync, 100000);
+            setTimeout(function() {
+                if (window.DeviceMotionEvent) 
+                    window.addEventListener('devicemotion', motionHandler, false);
+                else 
+                    alert('<div>Bump not supported</div>');
+            }, 1000);
+		</script>
+	</head>
+	<body>
+		Bump
+	</body>
+</html>
